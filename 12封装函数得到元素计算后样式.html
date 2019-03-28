@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>封装函数</title>
+		<style type="text/css">
+			div {
+				padding: 10px 20px 30px 40px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="">
+		</div>
+		<script type="text/javascript">
+			
+			function fetchComputedStyle(obj,property){
+				// 用户输入的属性有两种情况 一种是驼峰式 
+				// 一种是连字符写法
+				// 高版本下 paddingLeft ===>padding-left
+				if(window.getComputedStyle){
+					property = property.replace(/([A-Z])/g,function(match,$1){
+						return "-"+$1.toLowerCase();
+					});
+					return getComputedStyle(obj)[property];
+				}else{
+					property = property.replace(/\-([a-z])/g,function(match,$1){
+						return "-"+$1.toUpperCase();
+					});
+					return obj.currentStyle[property];
+				}
+			}
+			
+			var oDiv = document.getElementsByTagName("div")[0];
+			alert(fetchComputedStyle(oDiv,"padding-left"));
+		</script>
+	</body>
+</html>
